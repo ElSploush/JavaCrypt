@@ -291,6 +291,7 @@ public class JavaCrypt extends JFrame
 			
 			String lineRead = reader.readLine(); // Create local string for the line read and assign it to return from readLine
 			highScore = Integer.parseInt(lineRead); // Convert the lineRead string to an int
+			reader.close(); // Close the reader
 		}
 		catch (FileNotFoundException e)
 		{
