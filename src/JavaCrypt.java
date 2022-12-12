@@ -42,6 +42,7 @@ public class JavaCrypt extends JFrame
 	
 	// Variables for player
 	private static int healthPotionHealAmount; // Health potion heal amount
+	private static int successfulFleeChance; // Successful chance to flee
 	
 	// Objects
 	Random random = new Random(); // Create a random object for random number generation
@@ -226,13 +227,17 @@ public class JavaCrypt extends JFrame
 	public void foundHealthPotion()
 	{
 		JavaCrypt.getCurrentNumberOfHealthPotions(); // Retrieve the number of current health potions
-		currentNumberOfHealthPotions++; // Increment the number of health potions
 		
+		if (random.nextInt(101) <  enemy.getHealthPotionDropChance())
+		{
+		currentNumberOfHealthPotions++; // Increment the number of health potions
+			
 		JOptionPane.showMessageDialog(null, "The " + currentEnemy + " has dropped a health potion!"); // Display for message for health potion drop
 		JOptionPane.showMessageDialog(null, "You now have " + currentNumberOfHealthPotions + " potions."); // Display current number of health potions
-		
+			
 		// Update text field
 		infoSubPanel.setNumberOfHealthPotionsTextField(currentNumberOfHealthPotions);
+		}
 	}
 	
 	public void gameOver()
@@ -304,6 +309,12 @@ public class JavaCrypt extends JFrame
 		healthPotionHealAmount = player.getHealthPotionHealAmount(); // Retrieve health potion heal amount
 	}
 	
+	public void setPlayerFleeChance()
+	{
+		// Retrieve flee success percentage
+		successfulFleeChance = player.getSuccessfulFleeChance();
+	}
+	
 	// Accessor(s)
 	public boolean isGameOver() //Determine if the game is over
 	{
@@ -344,7 +355,7 @@ public class JavaCrypt extends JFrame
 		return currentPlayerHealth;
 	}
 	
-	public static int getCurrentNumberOfHealthPotions()
+	public int getCurrentNumberOfHealthPotions()
 	{
 		return currentNumberOfHealthPotions;
 	}

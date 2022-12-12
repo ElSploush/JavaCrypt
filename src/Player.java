@@ -34,7 +34,7 @@ public class Player
 		return healthPotionHealAmount;
 	}
 	
-	public static int getSuccessfulFleeChance()
+	public int getSuccessfulFleeChance()
 	{
 		return successfulFleeChance;
 	}

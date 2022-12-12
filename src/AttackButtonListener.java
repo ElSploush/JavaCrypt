@@ -7,9 +7,8 @@ import javax.swing.JOptionPane;
 public class AttackButtonListener implements ActionListener
 {
 	// Establish objects
-	private ActionButton attackButton; // AttackButtonListener has-a AttackButton
+	private AttackButton attackButton; // AttackButtonListener has-a AttackButton
 	private JavaCrypt game; // AttackButtonListener has-a JavaCrypt
-	private Enemy enemy = new Enemy(); // AttackButtonListener has-a enemy
 	Random random = new Random(); // Create random object for random number generation
 	
 	// Constructor(s)
@@ -34,19 +33,16 @@ public class AttackButtonListener implements ActionListener
 		{
 			try
 			{
-				game.enemyDead();
+				game.enemyDead(); // Display enemy dead message
 			}
 			catch (IOException e1)
 			{
-				// TODO Auto-generated catch block
+				// Print error message
 				e1.printStackTrace();
-			} // Display enemy dead message
-			
-			// Determine if enemy drops health potion
-			if(random.nextInt(101) <  enemy.getHealthPotionDropChance())
-			{
-				game.foundHealthPotion();
 			}
+			
+			// Determine if health potion drops
+			game.foundHealthPotion(); 
 			
 			// Spawn new enemy
 			game.spawnEnemy(); 
