@@ -33,7 +33,8 @@ public class InfoSubPanel extends JPanel
         setPreferredSize(new Dimension(600,75));
         
         // Player Health
-        add(playerHealthLabel = new JLabel("Player Health:")); // Create label, add to panel
+        playerHealthLabel = new JLabel("Player Health:");
+        add(playerHealthLabel); // Create label, add to panel
         add(playerHealthTextField = new JTextField(1)); // Create text field, add to panel
         playerHealthTextField.setText("100"); // Initialize text field with starting playerHealth
         
