@@ -42,7 +42,6 @@ public class JavaCrypt extends JFrame
 	
 	// Variables for player
 	private static int healthPotionHealAmount; // Health potion heal amount
-	private static int successfulFleeChance; // Successful chance to flee
 	
 	// Objects
 	Random random = new Random(); // Create a random object for random number generation
@@ -310,12 +309,6 @@ public class JavaCrypt extends JFrame
 		healthPotionHealAmount = player.getHealthPotionHealAmount(); // Retrieve health potion heal amount
 	}
 	
-	public void setPlayerFleeChance()
-	{
-		// Retrieve flee success percentage
-		successfulFleeChance = player.getSuccessfulFleeChance();
-	}
-	
 	// Accessor(s)
 	public boolean isGameOver() //Determine if the game is over
 	{
@@ -359,5 +352,10 @@ public class JavaCrypt extends JFrame
 	public int getCurrentNumberOfHealthPotions()
 	{
 		return currentNumberOfHealthPotions;
+	}
+	
+	public Player getPlayer()
+	{
+		return player;
 	}
 }	

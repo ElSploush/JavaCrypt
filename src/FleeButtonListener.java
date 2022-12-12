@@ -28,7 +28,7 @@ public class FleeButtonListener implements ActionListener
 	// Mutator(s)
 	public void actionPerformed(ActionEvent e) // Update text field and determine if game is over
     {
-		game.setPlayerFleeChance(); // Retrieve successful flee chance
+		game.getPlayer().getSuccessfulFleeChance(); // Set successful flee chance
 				
 		// Calculate flee roll
 		fleeRollChance = random.nextInt(101); // Generate a random number between 0 and 100 (incl.) for percentage chance to flee
