@@ -2,8 +2,8 @@ public class Player
 {
 	// Establish Player variables
 	private static int startingPlayerHealth = 100; // Starting value of player health
-	private static final int maxPlayerAttackDamage = 35; // Maximum amount of player attack damage
-	private static final int minPlayerAttackDamage = 20; // Minimum amount of player attack damage
+	private static final int maxPlayerAttackDamage = 40; // Maximum amount of player attack damage
+	private static final int minPlayerAttackDamage = 25; // Minimum amount of player attack damage
 	private static int startingNumberOfHealthPotions = 3; // Starting number of health potions
 	private static final int healthPotionHealAmount = 35; // Amount of heal per health potion
 	private static final int successfulFleeChance = 30; // Successful chance for player to flee

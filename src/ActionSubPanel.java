@@ -23,7 +23,7 @@ public class ActionSubPanel extends JPanel
 		setLayout(new GridLayout(1,3));
 		
 		// Change panel dimension
-        setPreferredSize(new Dimension(600,150));
+        setPreferredSize(new Dimension(650,250));
 		
 		// Create AttackButton and AtttackButtonListener Objects and register action listener
 		buttonArray[0] = new AttackButton("Attack"); // Set title of button

@@ -17,7 +17,7 @@ public class JavaCrypt extends JFrame
 {
 	// Establish window variables
 	private final int WINDOW_WIDTH = 700; // Initialize final window width
-	private final int WINDOW_HEIGHT = 325; // Initialize final window height
+	private final int WINDOW_HEIGHT = 400; // Initialize final window height
 	
 	// Establish panel variables
 	private JPanel playPanel = new JPanel(); // JavaCrypt has-a playPanel (JPanel)
