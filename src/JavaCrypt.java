@@ -1,6 +1,4 @@
 // Imports
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import javax.swing.*;
 import java.awt.*;
@@ -25,60 +23,26 @@ public class JavaCrypt extends JFrame
 	private ActionSubPanel actionSubPanel; // playPanel has-an actionSubPanel
 	
 	// Establish game objects
-	private static Player player = new Player(); // JavaCrypt has-a player
-	private Enemy enemy = new Enemy(); // JavaCrypy has-an enemy
+	private Player player; // JavaCrypt has-a player
+	private Enemy enemy; // JavaCrypy has-an enemy
 	
 	// Variables for InfoPanel
-	private static int currentPlayerHealth; // Value of player health
-	private static int currentNumberOfHealthPotions; // Value for number of potions
-	private static String currentEnemy; // Type of enemy
-	private static int currentEnemyHealth; // Current enemy health
 	private static int numberOfEnemiesDefeated; // The number of enemies defeated this game
 	private static int highScore; // All time high score
 	
-	// Variables for enemies
-	private static int maxCurrentEnemyAttackDamage; // Maximum attack damage for the current spawned enemy
-	private static int minCurrentEnemyAttackDamage; // Minimum attack damage for the current spawned enemy
-	
-	// Variables for player
-	private static int healthPotionHealAmount; // Health potion heal amount
+	// Establish Enemy attributes
+	private final int SYNTAX_ENEMY_HEALTH = 60; // Starting value of a Syntax enemy health
+	private final int EXCEPTION_ENEMY_HEALTH = 50; // Starting value of an Exception enemy health
+	private final int COMPILE_ENEMY_HEALTH = 40; // Starting value of a Compile enemy health
+	private final int MAX_SYNTAX_ATTACK_DAMAGE = 20; // Maximum attack damage for a Syntax enemy
+	private final int MIN_SYNTAX_ATTACK_DAMAGE = 10; // Minimum attack damage for a Syntax enemy
+	private final int MAX_EXCEPTION_ATTACK_DAMAGE = 30; // Maximum attack damage for an Exception enemy
+	private final int MIN_EXCEPTION_ATTACK_DAMAGE = 20; // Minimum attack damage for an Exception enemy
+	private final int MAX_COMPILE_ATTACK_DAMAGE = 40; // Maximum attack damage for a Compile enemy
+	private final int MIN_COMPILE_ATTACK_DAMAGE = 30; // Minimum attack damage for a Compile enemy
 	
 	// Objects
 	Random random = new Random(); // Create a random object for random number generation
-
-	// Main Method
-	public static void main(String[] args) throws IOException
-	{
-		// Display welcome message
-		JOptionPane.showMessageDialog(null, "Welcome to the Java Crypt!");
-		
-		// Display message for game objective and how to play
-		JOptionPane.showMessageDialog(null, "The Java Crypt is a simple dungeon crawler." +
-											"\n\nHOW TO PLAY:" + 
-											"\n\n-Inside the dungeon, you will encounter 3 types of enemies." + 
-											"\n-Each type of enemy has a different amount of health, and deals damage in a different range of values." +
-											"\n-You can chose one of three actions: Attack, Heal, or Flee." +
-											"\n-The Attack button deals damage to the enemy, whilst the enemy does damage to you." +
-											"\n-The Heal button heals the player for the turn, and the enemy deals no damage." +
-											"\n-The player can receive more health potions as a drop chance from defeating an enemy." +
-											"\n-The Flee button forces an attempt to flee from the current enemy." +
-											"\n-If the attempt to flee is succesful, the player receives no damage and encounters another enemy elsewhere." +
-											"\n-If the attempt is unsuccessful, the player receives half damage from the current enemie's attack range." +
-											"\n-The goal is to defeat as many enemies as possible before dying." +
-											"\n\n GOOD LUCK AND HAVE FUN!");
-		
-		// Create a new instance of the JavaCrypt
-		JavaCrypt javaCrypt = new JavaCrypt();
-		
-		// Load highScore and update text field
-		javaCrypt.loadHighScore();
-		
-		// Instantiate player values
-		javaCrypt.setStartingPlayerInfo();
-		
-		// Spawn initial enemy
-		javaCrypt.spawnEnemy();
-	}
 	
 	// Constructor(s)
 	public JavaCrypt() // No-arg constructor
@@ -95,9 +59,45 @@ public class JavaCrypt extends JFrame
 		// Display the window
 		setLocationRelativeTo(null);
 		setVisible(true);
+		
+		// Create a player
+		player = new Player(100, 3);
+		
+		// Update text fields
+		infoSubPanel.setPlayerHealthTextField(player.getHealth()); // Set enemy health text field
+		infoSubPanel.setNumberOfHealthPotionsTextField(player.getNumberOfHealthPotions()); // Set player health text field
+		
+		// Spawn an enemy
+		spawnEnemy(); 
 	}
 	
 	// Mutator(s)
+	public void spawnEnemy()
+	{
+		int enemyChoice = random.nextInt(3); // Generate a random number
+		
+		// Establish chosen enemy characteristics
+		if (enemyChoice == 0)
+		{
+			// Assign current enemy with Syntax values
+			enemy = new Enemy("Syntax", SYNTAX_ENEMY_HEALTH, MAX_SYNTAX_ATTACK_DAMAGE, MIN_SYNTAX_ATTACK_DAMAGE); 
+		}
+		else if (enemyChoice == 1)
+		{
+			// Assign current enemy with Syntax values
+			enemy = new Enemy("Exception", EXCEPTION_ENEMY_HEALTH, MAX_EXCEPTION_ATTACK_DAMAGE, MIN_EXCEPTION_ATTACK_DAMAGE);
+		}
+		else if (enemyChoice == 2)
+		{
+			// Assign current enemy with Syntax values
+			enemy = new Enemy("Compile", COMPILE_ENEMY_HEALTH, MAX_COMPILE_ATTACK_DAMAGE, MIN_COMPILE_ATTACK_DAMAGE);
+		}
+		
+		// Update text fields on InfoSubPanel
+		infoSubPanel.setEnemyTypeTextField(enemy.getEnemy()); // Update which enemy spawned
+		infoSubPanel.setEnemyHealthTextField(enemy.getHealth()); // Update enemy health
+	}
+	
 	public void createPlayPanel()
 	{
 		// Establish local variables
@@ -122,135 +122,59 @@ public class JavaCrypt extends JFrame
 		infoSubPanel.setBorder(aboveTopBorderInfoSubPanel); 
 	}
 	
-	public void spawnEnemy()
+	public void attackPhase()
 	{
-		// Create list of enemy types
-		ArrayList<String> enemyTypes = new ArrayList<String> (Arrays.asList("Syntax","Exception","Compile"));  // ArrayList of enemy types
-				
-		// Create and define an enemy
-		currentEnemy = enemyTypes.get(random.nextInt(enemyTypes.size())); // Retrieve random element from ArrayList and assign it to String currentEnemy
-				
-		// Establish chosen enemy characteristics
-		if (currentEnemy.equals("Syntax"))
-		{
-		// Assign current enemy with Syntax values
-		currentEnemyHealth = enemy.getSyntaxHealth(); // If enemy is Syntax, set currentEnemyHealth equal to syntaxEnemyHealth
-		maxCurrentEnemyAttackDamage = enemy.getMaxSyntaxAttackDamage(); // If enemy is Syntax, set maxEnemyAttackDamage equal to maxSyntaxAttackDamage
-		minCurrentEnemyAttackDamage = enemy.getMinSyntaxAttackDamage(); // If enemy is Syntax, set minEnemyAttackDamage equal to minSyntaxAttackDamage
-		}
-		else if (currentEnemy.equals("Exception"))
-		{
-		// Assign current enemy with Exception values	
-		currentEnemyHealth = enemy.getExceptionHealth(); // If enemy is Exception, set currentEnemyHealth equal to exceptionEnemyHealth
-		maxCurrentEnemyAttackDamage = enemy.getMaxExceptionAttackDamage(); // If enemy is Exception, set maxEnemyAttackDamage equal to maxExceptionAttackDamage
-		minCurrentEnemyAttackDamage = enemy.getMinExceptionAttackDamage(); // If enemy is Exception, set minEnemyAttackDamage equal to minExceptionAttackDamage
-		}
-		else if (currentEnemy.equals("Compile"))
-		{
-		// Assign current enemy with Compile values
-		currentEnemyHealth = enemy.getCompileHealth(); // If enemy is Compile, set currentEnemyHealth equal to compileEnemyHealth
-		maxCurrentEnemyAttackDamage = enemy.getMaxCompileAttackDamage(); // If enemy is Compile, set maxEnemyAttackDamage equal to maxCompileAttackDamage
-		minCurrentEnemyAttackDamage = enemy.getMinCompileAttackDamage(); // If enemy is Compile, set minEnemyAttackDamage equal to minCompileAttackDamage
-		}
-				
-		// Display message for which enemy has spawned
-		JOptionPane.showMessageDialog(null, "A(n) " + currentEnemy + " has spawned!");
+		// Retrieve values
+		int damageDealtByEnemy = enemy.damageDealt();
+		int damageDealtByPlayer = player.damageDealt();
+		int playerHealth = player.getHealth();
+		int enemyHealth = enemy.getHealth();
 		
-		// Update text fields on InfoSubPanel
-		infoSubPanel.setEnemyTypeTextField(currentEnemy); // Update which enemy spawned
-		infoSubPanel.setEnemyHealthTextField(currentEnemyHealth); // Update enemy health
-	}
-	
-	public void attack() // Adjust text fields for attack
-	{
-		// Retrieve current enemy and player health before attack
-		currentEnemyHealth = this.getCurrentEnemyHealth();
-		currentPlayerHealth = this.getCurrentPlayerHealth();
-				
-		// Determine player damage to enemy
-		int damageDealtToEnemy = random.nextInt(player.getMinPlayerAttackDamage(), player.getMaxPlayerAttackDamage()+1); // Establish variable for dmg dealt to enemy
-																								 // Assign variable to random number between min and max player damage
-				
+		// Display message
+		JOptionPane.showMessageDialog(null, "The " + enemy.getEnemy() + " attacks for " + damageDealtByEnemy + "!");
+		JOptionPane.showMessageDialog(null, "You have attacked the " + enemy.getEnemy() + " for " + damageDealtByPlayer + "!");
 		
-		// Determine damage taken by player
-		int damageDealtToPlayer = random.nextInt(minCurrentEnemyAttackDamage, maxCurrentEnemyAttackDamage+1); // Establish variable for dmg taken by player
-																											  // Assign variable to random number between min and max
-			
-		// Calculate damage dealt and taken
-		currentEnemyHealth -= damageDealtToEnemy; // Subtract damage dealt from enemy health
-		currentPlayerHealth -= damageDealtToPlayer; // Subtract damage dealt from player health
+		// Calculate
+		playerHealth -= damageDealtByEnemy;
+		enemyHealth -= damageDealtByPlayer;
 		
-		// Display damage recap
-		JOptionPane.showMessageDialog(null, "The " + currentEnemy + " has attacked you for " + damageDealtToPlayer + ".");
-		JOptionPane.showMessageDialog(null, "You have attacked the " + currentEnemy + " for " + damageDealtToEnemy + ".");
-		
-		// Update text fields
-		infoSubPanel.setEnemyHealthTextField(currentEnemyHealth); // Set enemy health text field
-		infoSubPanel.setPlayerHealthTextField(currentPlayerHealth); // Set player health text field
-	}
-	
-	public void fleeAttack()
-	{
-		// Determine damage taken by player
-		int damageDealtToPlayer = (random.nextInt(minCurrentEnemyAttackDamage, maxCurrentEnemyAttackDamage+1)/2); // Establish variable for dmg taken by player
-																											  	  // Assign variable to random number between min and max enemy damage
-																												  // Divide by 2 for flee
-		
-		// Calculate damage taken during flee
-		currentPlayerHealth -= damageDealtToPlayer; // Subtract damage dealt from player health
-		
-		// Display damage recap
-		JOptionPane.showMessageDialog(null, "Your attempt to flee is unsuccesful!");
-		JOptionPane.showMessageDialog(null, "The " + currentEnemy + " has attacked you for " + damageDealtToPlayer + " during your attempt to flee.");
-		
-		// Update text field
-		infoSubPanel.setPlayerHealthTextField(currentPlayerHealth); // Set player health text field
+		// Update panels
+		infoSubPanel.setPlayerHealthTextField(playerHealth);
+		infoSubPanel.setEnemyHealthTextField(enemyHealth);
 	}
 	
 	public void heal()
 	{
-		// Add heal amount to currentPlayerHealth
-		currentPlayerHealth += healthPotionHealAmount; 
-		
-		// Reduce number of potions
-		currentNumberOfHealthPotions--;
+		player.useHealthPotion(); // Use a health potion on the player
 		
 		// Display message
-		JOptionPane.showMessageDialog(null, "You have healed for " + healthPotionHealAmount + "!");
-		
+		JOptionPane.showMessageDialog(null, "You have healed for " + player.getHealthPotionHealAmount() + "!");
+				
 		// Update text fields
-		infoSubPanel.setPlayerHealthTextField(currentPlayerHealth); // Set player health text field
-		infoSubPanel.setNumberOfHealthPotionsTextField(currentNumberOfHealthPotions); // Set number of health potions text field
+		infoSubPanel.setPlayerHealthTextField(player.getHealth()); // Set player health text field
+		infoSubPanel.setNumberOfHealthPotionsTextField(player.getNumberOfHealthPotions()); // Set number of health potions text field
 	}
 	
-	public void foundHealthPotion()
+	public void dropHealthPotion()
 	{
-		this.getCurrentNumberOfHealthPotions(); // Retrieve the number of current health potions
-		
-		if (random.nextInt(101) <  enemy.getHealthPotionDropChance())
+		if (random.nextInt(101) < enemy.getHealthPotionDropChance())
 		{
-		currentNumberOfHealthPotions++; // Increment the number of health potions
-			
-		JOptionPane.showMessageDialog(null, "The " + currentEnemy + " has dropped a health potion!"); // Display for message for health potion drop
-		JOptionPane.showMessageDialog(null, "You now have " + currentNumberOfHealthPotions + " potions."); // Display current number of health potions
-			
-		// Update text field
-		infoSubPanel.setNumberOfHealthPotionsTextField(currentNumberOfHealthPotions);
+		player.foundHealthPotion();
 		}
 	}
 	
 	public void gameOver()
 	{
-		JOptionPane.showMessageDialog(null, "You have been defeated by " + currentEnemy + "!" + "\nGood luck next time!"); // Display game over message
+		JOptionPane.showMessageDialog(null, "You have been defeated by " + enemy.getEnemy() + "!" + "\nGood luck next time!"); // Display game over message
 		
 		// CLOSE THE PROGRAM
 		System.exit(0); // stop program
 	}
 	
-	public void enemyDead() throws IOException
+	public void enemyDead()
 	{
 		// Display message
-		JOptionPane.showMessageDialog(null, "You have deafeted the " + currentEnemy + "!");
+		JOptionPane.showMessageDialog(null, "You have deafeted the " + enemy.getEnemy() + "!");
 		
 		// Increment number of enemies defeated
 		numberOfEnemiesDefeated++;
@@ -262,7 +186,7 @@ public class JavaCrypt extends JFrame
 		infoSubPanel.setNumberOfEnemiesDefeatedTextField(numberOfEnemiesDefeated);
 	}
 	
-	public void isHighScore() throws IOException
+	public void isHighScore()
 	{
 		if (numberOfEnemiesDefeated > highScore)
 		{
@@ -276,7 +200,7 @@ public class JavaCrypt extends JFrame
 			} catch (IOException e)
 			{
 				// Print error message
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error writing to file \'highscore.txt\'");
 			}	
 		}
 	}
@@ -295,24 +219,23 @@ public class JavaCrypt extends JFrame
 		catch (FileNotFoundException e)
 		{
 			// Print error message 
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error reading file \'highscore.txt\'. The program will close.");
+			System.exit(0);
+		}
+		catch (NumberFormatException nfe)
+		{
+			JOptionPane.showMessageDialog(null, "Conversion error from \'highscore.txt\'. The program will close.");
+			System.exit(0);
 		}
 		
 		// Update text field
 		infoSubPanel.setHighScoreTextField(highScore);
 	}
 	
-	public void setStartingPlayerInfo()
-	{
-		currentPlayerHealth = player.getStartingPlayerHealth(); // Retrieve player starting health
-		currentNumberOfHealthPotions = player.getStartingNumberOfHealthPotions(); // Retrieve starting number of health potions
-		healthPotionHealAmount = player.getHealthPotionHealAmount(); // Retrieve health potion heal amount
-	}
-	
 	// Accessor(s)
 	public boolean isGameOver() //Determine if the game is over
 	{
-		if (currentPlayerHealth <= 0)
+		if (player.getHealth() <= 0)
 		{
 			return true;
 		}
@@ -324,7 +247,7 @@ public class JavaCrypt extends JFrame
 	
 	public boolean isEnemyDead() //Determine if the enemy is dead
 	{
-		if (currentEnemyHealth <= 0)
+		if (enemy.getHealth() <= 0)
 		{
 			return true;
 		}
@@ -334,28 +257,25 @@ public class JavaCrypt extends JFrame
 		}
 	}
 	
-	public String getCurrentEnemy()
+	public boolean isHealthPotion() //Determine if the game is over
 	{
-		return currentEnemy;
-	}
-	
-	public int getCurrentEnemyHealth()
-	{
-		return currentEnemyHealth;
-	}
-	
-	public int getCurrentPlayerHealth()
-	{
-		return currentPlayerHealth;
-	}
-	
-	public int getCurrentNumberOfHealthPotions()
-	{
-		return currentNumberOfHealthPotions;
+		if (player.getNumberOfHealthPotions() > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	public Player getPlayer()
 	{
 		return player;
+	}
+	
+	public Enemy getEnemy()
+	{
+		return enemy;
 	}
 }	

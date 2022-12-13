@@ -21,8 +21,8 @@ public class AttackButtonListener implements ActionListener
 	// Mutator(s)
 	public void actionPerformed(ActionEvent e)
     {
-		// Perform attack method
-		game.attack();
+		// Perform attack methods
+		game.attackPhase();
 		
 		// Determine if the player died
 		if (game.isGameOver()) // Determine if player health is less than 0
@@ -31,21 +31,14 @@ public class AttackButtonListener implements ActionListener
 		}
 		else if (game.isEnemyDead())
 		{
-			try
-			{
-				game.enemyDead(); // Display enemy dead message
-			}
-			catch (IOException e1)
-			{
-				// Print error message
-				e1.printStackTrace();
-			}
+			
+			game.enemyDead(); // Display enemy dead message
 			
 			// Determine if health potion drops
-			game.foundHealthPotion(); 
+			game.dropHealthPotion(); 
 			
 			// Spawn new enemy
-			game.spawnEnemy(); 
+			game.spawnEnemy();
 		}
     }
 }

@@ -33,33 +33,35 @@ public class InfoSubPanel extends JPanel
         setPreferredSize(new Dimension(600,75));
         
         // Player Health
-        playerHealthLabel = new JLabel("Player Health:");
-        add(playerHealthLabel); // Create label, add to panel
+        playerHealthLabel = new JLabel("Player Health:"); // Create label
+        add(playerHealthLabel); // Add to panel
         add(playerHealthTextField = new JTextField(1)); // Create text field, add to panel
-        playerHealthTextField.setText("100"); // Initialize text field with starting playerHealth
         
         // Enemy Type
-        add(enemyTypeLabel = new JLabel("Enemy Type:")); // Create label, add to panel
+        enemyTypeLabel = new JLabel("Enemy Type:"); 
+        add(enemyTypeLabel); // Create label, add to panel
         add(enemyTypeTextField = new JTextField(1)); // Create text field, add to panel
         
         // Number of Enemies Defeated
-        add(numberOfEnemiesDefeatedLabel = new JLabel("Enemies Slain:")); // Create label, add to panel
+        numberOfEnemiesDefeatedLabel = new JLabel("Enemies Slain:"); // Create label
+        add(numberOfEnemiesDefeatedLabel); // Add to panel
         add(numberOfEnemiesDefeatedTextField = new JTextField(1)); // Create text field, add to panel
         numberOfEnemiesDefeatedTextField.setText("0"); // Initialize text field with starting number of defeated enemies
         
         // Health Potions
-        add(numberOfHealthPotionsLabel = new JLabel("Health Potions:")); // Create label, add to panel
+        numberOfHealthPotionsLabel = new JLabel("Health Potions:"); // Create label
+        add(numberOfHealthPotionsLabel); // Add to panel
         add(numberOfHealthPotionsTextField = new JTextField(1)); // Create text field, add to panel
-        numberOfHealthPotionsTextField.setText("3"); // Initialize text field with starting numberOfPotions
         
         // Enemy Health
-        add(enemyHealthLabel = new JLabel("Enemy Health:")); // Create label, add to panel
+        enemyHealthLabel = new JLabel("Enemy Health:"); // Create label
+        add(enemyHealthLabel); // Add to panel
         add(enemyHealthTextField = new JTextField(1)); // Create text field, add to panel
         
         // Highscore
-        add(highScoreLabel = new JLabel("High Score:")); // Create label, add to panel
+        highScoreLabel = new JLabel("High Score:"); // Create label
+        add(highScoreLabel); // Add to panel
         add(highScoreTextField = new JTextField(1)); // Create text field, add to panel
-        highScoreTextField.setText("0"); // Initialize text field with starting highscore
     }
     
     // Mutator(s)

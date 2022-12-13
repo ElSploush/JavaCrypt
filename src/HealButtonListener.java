@@ -8,9 +8,7 @@ public class HealButtonListener implements ActionListener
 	// Establish instance variables
 	private HealButton healButton; // HealButtonListener has-a healButton
 	private JavaCrypt game; // HealButtonListener has-a JavaCrypt
-	
-	// Establish player variables
-	private int currentNumberOfHealthPotions; // Starting number of health potions
+	private Player player; // HealButtonListener has-a Player
 	
 	// Constructor(s)
 	public HealButtonListener(HealButton givenHealButton, JavaCrypt givenGame) // Create listener with a HealButton and JavaCrypt
@@ -22,10 +20,8 @@ public class HealButtonListener implements ActionListener
 	// Mutator(s)
 	public void actionPerformed(ActionEvent e) // Update text field and determine if game is over
     {
-		currentNumberOfHealthPotions = game.getCurrentNumberOfHealthPotions(); // Retrieve current number of health potions
-		
 		// Determine if player has health potions to use
-		if (currentNumberOfHealthPotions > 0)
+		if (game.isHealthPotion())
 		{
 			// Perform heal method
 			game.heal(); 
