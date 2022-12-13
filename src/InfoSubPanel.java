@@ -2,6 +2,7 @@
 import javax.swing.*;
 import java.awt.*;
 
+@SuppressWarnings("serial")
 public class InfoSubPanel extends JPanel
 {	
     // Player variables

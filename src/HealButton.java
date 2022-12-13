@@ -1,6 +1,7 @@
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
+@SuppressWarnings("serial")
 public class HealButton extends ActionButton
 {
 	// Constructor(s)

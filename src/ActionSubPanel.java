@@ -2,6 +2,7 @@
 import javax.swing.*;
 import java.awt.*;
 
+@SuppressWarnings("serial")
 public class ActionSubPanel extends JPanel
 {
 	// Establish objects
@@ -27,17 +28,17 @@ public class ActionSubPanel extends JPanel
 		
 		// Create AttackButton and AtttackButtonListener Objects and register action listener
 		buttonArray[0] = new AttackButton("Attack"); // Set title of button
-		AttackButtonListener attackButtonListener = new AttackButtonListener((AttackButton) buttonArray[0], game);
+		AttackButtonListener attackButtonListener = new AttackButtonListener(game);
 		buttonArray[0].addActionListener(attackButtonListener);
 		
 		// Create HealButton and HealButtonListener Objects and register action listener
 		buttonArray[1] = new HealButton("Heal"); 
-		HealButtonListener healButtonListener = new HealButtonListener((HealButton) buttonArray[1], game);
+		HealButtonListener healButtonListener = new HealButtonListener(game);
 		buttonArray[1].addActionListener(healButtonListener);
 		
 		// Create FleeButton and FleeButtonListener Objects and register action listener
 		buttonArray[2] = new FleeButton("Flee"); 
-		FleeButtonListener fleeButtonListener = new FleeButtonListener((FleeButton) buttonArray[2], game);
+		FleeButtonListener fleeButtonListener = new FleeButtonListener(game);
 		buttonArray[2].addActionListener(fleeButtonListener);
 		
 		// Add buttonArray to the action panel

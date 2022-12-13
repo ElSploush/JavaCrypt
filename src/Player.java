@@ -7,7 +7,6 @@ public class Player
 	// Objects
 	Random random = new Random(); // Create a random object for random number generation
 	private Enemy enemy; // Player has-a enemy
-	private InfoSubPanel infoSubPanel = new InfoSubPanel(); // Player has-a infoSubPanel
 		
 	// Establish Player variables
 	private final int MAX_ATTACK_DAMAGE = 40; // Maximum amount of player attack damage
@@ -18,7 +17,8 @@ public class Player
 	// Establish instance variables
 	private int health; // Player health
 	private int numberOfHealthPotions; // Number of health potions
-	private int damageDealt; // Damage dealt
+	private int enemyDamage; // Damage dealt by enemy
+	private int enemyFleeDamage; // Damage dealt by enemy during flee
 	
 	// Contructor(s)
 	public Player(int health, int numberOfHealthPotions)
@@ -26,13 +26,27 @@ public class Player
 		// Set current player health and number of potions
 		this.health = health;
 		this.numberOfHealthPotions = numberOfHealthPotions;
-		
-		// Update text fields
-		infoSubPanel.setPlayerHealthTextField(health); // Set enemy health text field
-		infoSubPanel.setNumberOfHealthPotionsTextField(numberOfHealthPotions); // Set player health text field
 	}
 	
 	// Mutator(s)
+	public void receiveAttack(Enemy givenEnemy)
+	{
+		enemy = givenEnemy; // Set the player
+		
+		enemyDamage = enemy.damageDealt(); // Set the enemy damage
+		
+		health -= enemyDamage; // Subtract damage dealt by enemy from enemy health
+	}
+	
+	public void receiveFleeAttack(Enemy givenEnemy)
+	{
+		enemy = givenEnemy; // Set the enemy
+		
+		enemyFleeDamage = enemy.fleeDamageDealt(); // Call the enemy from the game
+		
+		health -= enemyFleeDamage; // Subtract damage dealt by enemy from enemy health
+	}
+	
 	public void foundHealthPotion()
 	{
 		numberOfHealthPotions++; // Increment the number of health potions
@@ -40,9 +54,6 @@ public class Player
 		// Display message
 		JOptionPane.showMessageDialog(null, "A health potion dropped!"); // Display for message for health potion drop
 		JOptionPane.showMessageDialog(null, "You now have " + numberOfHealthPotions + " potions."); // Display current number of health potions
-				
-		// Update text field
-		infoSubPanel.setNumberOfHealthPotionsTextField(numberOfHealthPotions);
 	}
 	
 	public void useHealthPotion()
@@ -52,8 +63,6 @@ public class Player
 		health += HEALTH_POTION_HEAL_AMOUNT; // Heal the player
 	}
 	
-	
-	
 	// Accessor(s)
 	public int damageDealt()
 	{
@@ -62,6 +71,16 @@ public class Player
 																			  	  // Assign variable to random number between min and max player damage
 		
 		return damageDealt;
+	}
+	
+	public int getEnemyDamage()
+	{
+		return enemyDamage;
+	}
+	
+	public int getEnemyFleeDamage()
+	{
+		return enemyFleeDamage;
 	}
 	
 	public int getHealth()
@@ -74,16 +93,6 @@ public class Player
 		return SUCCESSFUL_FLEE_CHANCE;
 	}
 	
-	public int getMaxAttackDamage()
-	{
-		return MAX_ATTACK_DAMAGE;
-	}
-	
-	public int getMinAttackDamage()
-	{
-		return MIN_ATTACK_DAMAGE;
-	}
-	
 	public int getNumberOfHealthPotions()
 	{
 		return numberOfHealthPotions;
@@ -92,10 +101,5 @@ public class Player
 	public int getHealthPotionHealAmount()
 	{
 		return HEALTH_POTION_HEAL_AMOUNT;
-	}
-	
-	public int getDamageDealt()
-	{
-		return damageDealt;
 	}
 }

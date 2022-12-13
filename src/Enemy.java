@@ -7,7 +7,6 @@ public class Enemy
 	// Objects
 	Random random = new Random(); // Create a random object for random number generation
 	private Player player; // Enemy has-a player
-	private InfoSubPanel infoSubPanel = new InfoSubPanel(); // Enemy has-a infoSubPanel
 	
 	// Establish finals
 	private final int HEALTH_POTION_DROP_CHANCE = 40; // Amount of heal per health potion
@@ -17,7 +16,7 @@ public class Enemy
 	private int health; //Enemy health
 	private int maxAttackDamage; // Max enemy attack damage
 	private int minAttackDamage; // Min attack damage
-	private int damageDealt; // Damage dealt
+	private int playerDamage; // Damage dealt by player
 	
 	// Contstructor(s)
 	public Enemy(String enemy, int health, int maxAttackDamage, int minAttackDamage)
@@ -32,31 +31,13 @@ public class Enemy
 	}
 	
 	// Mutator(s)
-	
-	public void fleeAttack()
+	public void receiveAttack(Player givenPlayer)
 	{
-		// Determine damage dealt to player
-		int damageDealt = random.nextInt(random.nextInt(minAttackDamage, maxAttackDamage+1)/2); // Establish variable for dmg taken by player
-																		  // Assign variable to random number between min and max
-			
-		// Deal damage to player
-		int playerHealth = player.getHealth();
-		playerHealth -= damageDealt;
-			
-		// Display damage recap
-		JOptionPane.showMessageDialog(null, "Your attempt to flee is unsuccesful!");
-		JOptionPane.showMessageDialog(null, "The " + enemy + " has attacked you for " + damageDealt + " during your attempt to flee.");
-				
-		// Update text field
-		infoSubPanel.setPlayerHealthTextField(playerHealth); // Set player health text field
-	}
-	
-	public void isHealthPotionDropped()
-	{
-		if (random.nextInt(101) <  HEALTH_POTION_DROP_CHANCE)
-		{
-			player.foundHealthPotion();
-		}
+		player = givenPlayer; // Set the player
+		
+		playerDamage = player.damageDealt(); // Set the player damage
+		
+		health -= playerDamage; // Subtract damage dealt by player from enemy health
 	}
 	
 	// Accessor(s)
@@ -67,6 +48,20 @@ public class Enemy
 																			  // Assign variable to random number between min and max player damage
 		
 		return damageDealt;
+	}
+	
+	public int fleeDamageDealt()
+	{
+		// Determine damage dealt by enemy
+		int damageDealt = random.nextInt(getMinAttackDamage(), getMaxAttackDamage()+1)/2; // Establish variable for dmg dealt to player
+																			  					// Assign variable to random number between min and max player damage
+		
+		return damageDealt;
+	}
+	
+	public int getPlayerDamage()
+	{
+		return playerDamage;
 	}
 	
 	public String getEnemy()

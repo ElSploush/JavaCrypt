@@ -2,7 +2,7 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-public class Play
+public class PlayGame
 {
 	// Main Method
 	public static void main(String[] args) throws IOException

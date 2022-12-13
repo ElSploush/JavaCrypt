@@ -1,20 +1,16 @@
 // Imports
 import java.awt.event.*;
-import java.io.IOException;
 import java.util.Random;
-import javax.swing.JOptionPane;
 
 public class AttackButtonListener implements ActionListener
 {
 	// Establish objects
-	private AttackButton attackButton; // AttackButtonListener has-a AttackButton
 	private JavaCrypt game; // AttackButtonListener has-a JavaCrypt
 	Random random = new Random(); // Create random object for random number generation
 	
 	// Constructor(s)
-	public AttackButtonListener(AttackButton givenAttackButton, JavaCrypt givenGame) // Create listener with an AttackButton and JavaCrypt
+	public AttackButtonListener(JavaCrypt givenGame) // Create listener with an AttackButton and JavaCrypt
     {
-        attackButton = givenAttackButton; // Set the ActionButton
         game = givenGame; // Set the game
     }
 	

@@ -6,14 +6,11 @@ import javax.swing.JOptionPane;
 public class HealButtonListener implements ActionListener
 {
 	// Establish instance variables
-	private HealButton healButton; // HealButtonListener has-a healButton
 	private JavaCrypt game; // HealButtonListener has-a JavaCrypt
-	private Player player; // HealButtonListener has-a Player
 	
 	// Constructor(s)
-	public HealButtonListener(HealButton givenHealButton, JavaCrypt givenGame) // Create listener with a HealButton and JavaCrypt
+	public HealButtonListener(JavaCrypt givenGame) // Create listener with a HealButton and JavaCrypt
     {
-        healButton = givenHealButton; // Set the HealButton
         game = givenGame; // Set the game
     }
 	

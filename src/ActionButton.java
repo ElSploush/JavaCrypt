@@ -1,6 +1,7 @@
 // Imports
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class ActionButton extends JButton
 {
 	// Establish instance variables

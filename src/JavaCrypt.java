@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import javax.swing.border.TitledBorder;
 
+@SuppressWarnings("serial")
 public class JavaCrypt extends JFrame
 {
 	// Establish window variables
@@ -30,6 +31,10 @@ public class JavaCrypt extends JFrame
 	private static int numberOfEnemiesDefeated; // The number of enemies defeated this game
 	private static int highScore; // All time high score
 	
+	// Establish Starting player attributes
+	private final int STARTING_PLAYER_HEALTH = 100; // Starting player health
+	private final int STARTING_NUMBER_OF_HEALTH_POTIONS = 3; // Starting number of player health potions
+	
 	// Establish Enemy attributes
 	private final int SYNTAX_ENEMY_HEALTH = 60; // Starting value of a Syntax enemy health
 	private final int EXCEPTION_ENEMY_HEALTH = 50; // Starting value of an Exception enemy health
@@ -40,6 +45,9 @@ public class JavaCrypt extends JFrame
 	private final int MIN_EXCEPTION_ATTACK_DAMAGE = 20; // Minimum attack damage for an Exception enemy
 	private final int MAX_COMPILE_ATTACK_DAMAGE = 40; // Maximum attack damage for a Compile enemy
 	private final int MIN_COMPILE_ATTACK_DAMAGE = 30; // Minimum attack damage for a Compile enemy
+	
+	// Establish flee variables
+	private static int fleeRoll; // Percentage chance to flee
 	
 	// Objects
 	Random random = new Random(); // Create a random object for random number generation
@@ -61,7 +69,7 @@ public class JavaCrypt extends JFrame
 		setVisible(true);
 		
 		// Create a player
-		player = new Player(100, 3);
+		player = new Player(STARTING_PLAYER_HEALTH, STARTING_NUMBER_OF_HEALTH_POTIONS);
 		
 		// Update text fields
 		infoSubPanel.setPlayerHealthTextField(player.getHealth()); // Set enemy health text field
@@ -124,23 +132,29 @@ public class JavaCrypt extends JFrame
 	
 	public void attackPhase()
 	{
-		// Retrieve values
-		int damageDealtByEnemy = enemy.damageDealt();
-		int damageDealtByPlayer = player.damageDealt();
-		int playerHealth = player.getHealth();
-		int enemyHealth = enemy.getHealth();
+		enemy.receiveAttack(player); // Receive attack on enemy
+		player.receiveAttack(enemy); // Receive attack on player
+		
+		// Display messages
+		JOptionPane.showMessageDialog(null, "The " + enemy.getEnemy() + " attacks you for " + player.getEnemyDamage() + "!");
+		JOptionPane.showMessageDialog(null, "You attack the " + enemy.getEnemy() + " for " + enemy.getPlayerDamage() + "!");
+		
+		// Update text fields
+		infoSubPanel.setPlayerHealthTextField(player.getHealth()); // Set player health text field
+		infoSubPanel.setEnemyHealthTextField(enemy.getHealth()); // Set enemy health text field
+		
+	}
+	
+	public void fleeAttack()
+	{
+		player.receiveFleeAttack(enemy); // Receive flee attack on player
 		
 		// Display message
-		JOptionPane.showMessageDialog(null, "The " + enemy.getEnemy() + " attacks for " + damageDealtByEnemy + "!");
-		JOptionPane.showMessageDialog(null, "You have attacked the " + enemy.getEnemy() + " for " + damageDealtByPlayer + "!");
+		JOptionPane.showMessageDialog(null, "Your attempt to flee was unsuccesful!");
+		JOptionPane.showMessageDialog(null, "The " + enemy.getEnemy() + " has attacked you for " + player.getEnemyFleeDamage() + " during your attempt to flee.");
 		
-		// Calculate
-		playerHealth -= damageDealtByEnemy;
-		enemyHealth -= damageDealtByPlayer;
-		
-		// Update panels
-		infoSubPanel.setPlayerHealthTextField(playerHealth);
-		infoSubPanel.setEnemyHealthTextField(enemyHealth);
+		// Update text fields
+		infoSubPanel.setPlayerHealthTextField(player.getHealth()); // Set player health text field
 	}
 	
 	public void heal()
@@ -160,6 +174,9 @@ public class JavaCrypt extends JFrame
 		if (random.nextInt(101) < enemy.getHealthPotionDropChance())
 		{
 		player.foundHealthPotion();
+		
+		// Update text panel
+		infoSubPanel.setNumberOfHealthPotionsTextField(player.getNumberOfHealthPotions());
 		}
 	}
 	
@@ -184,6 +201,16 @@ public class JavaCrypt extends JFrame
 		
 		// Update text field
 		infoSubPanel.setNumberOfEnemiesDefeatedTextField(numberOfEnemiesDefeated);
+	}
+	
+	public void flee()
+	{
+		// Display message
+		JOptionPane.showMessageDialog(null, "You flee from the " + enemy.getEnemy() + " succesfully!"); // Display message for player running away
+		JOptionPane.showMessageDialog(null, "You encounter a new enemy elsewhere."); // Display message for player starting combat with new enemy
+		
+		// Spawn new enemy
+		this.spawnEnemy();
 	}
 	
 	public void isHighScore()
@@ -260,6 +287,21 @@ public class JavaCrypt extends JFrame
 	public boolean isHealthPotion() //Determine if the game is over
 	{
 		if (player.getNumberOfHealthPotions() > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public boolean isFleeSuccessful() // Determine if the flee is successful
+	{
+		// Calculate flee roll
+		fleeRoll = random.nextInt(101); // Generate a random number between 0 and 100 (incl.) for percentage chance to flee
+		
+		if (fleeRoll <= player.getSuccessfulFleeChance())
 		{
 			return true;
 		}
