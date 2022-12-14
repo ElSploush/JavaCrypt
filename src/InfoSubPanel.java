@@ -36,33 +36,39 @@ public class InfoSubPanel extends JPanel
         // Player Health
         playerHealthLabel = new JLabel("Player Health:"); // Create label
         add(playerHealthLabel); // Add to panel
-        add(playerHealthTextField = new JTextField(1)); // Create text field, add to panel
+        add(playerHealthTextField = new JTextField()); // Create text field, add to panel
+        playerHealthTextField.setEditable(false); // Make the text field not editable
         
         // Enemy Type
         enemyTypeLabel = new JLabel("Enemy Type:"); 
         add(enemyTypeLabel); // Create label, add to panel
-        add(enemyTypeTextField = new JTextField(1)); // Create text field, add to panel
+        add(enemyTypeTextField = new JTextField()); // Create text field, add to panel
+        enemyTypeTextField.setEditable(false); // Make the text field not editable
         
         // Number of Enemies Defeated
         numberOfEnemiesDefeatedLabel = new JLabel("Enemies Slain:"); // Create label
         add(numberOfEnemiesDefeatedLabel); // Add to panel
-        add(numberOfEnemiesDefeatedTextField = new JTextField(1)); // Create text field, add to panel
+        add(numberOfEnemiesDefeatedTextField = new JTextField()); // Create text field, add to panel
         numberOfEnemiesDefeatedTextField.setText("0"); // Initialize text field with starting number of defeated enemies
+        numberOfEnemiesDefeatedTextField.setEditable(false); // Make the text field not editable
         
         // Health Potions
         numberOfHealthPotionsLabel = new JLabel("Health Potions:"); // Create label
         add(numberOfHealthPotionsLabel); // Add to panel
-        add(numberOfHealthPotionsTextField = new JTextField(1)); // Create text field, add to panel
+        add(numberOfHealthPotionsTextField = new JTextField()); // Create text field, add to panel
+        numberOfHealthPotionsTextField.setEditable(false); // Make the text field not editable
         
         // Enemy Health
         enemyHealthLabel = new JLabel("Enemy Health:"); // Create label
         add(enemyHealthLabel); // Add to panel
-        add(enemyHealthTextField = new JTextField(1)); // Create text field, add to panel
+        add(enemyHealthTextField = new JTextField()); // Create text field, add to panel
+        enemyHealthTextField.setEditable(false); // Make the text field not editable
         
         // Highscore
         highScoreLabel = new JLabel("High Score:"); // Create label
         add(highScoreLabel); // Add to panel
-        add(highScoreTextField = new JTextField(1)); // Create text field, add to panel
+        add(highScoreTextField = new JTextField()); // Create text field, add to panel
+        highScoreTextField.setEditable(false); // Make the text field not editable
     }
     
     // Mutator(s)
