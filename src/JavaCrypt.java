@@ -1,13 +1,14 @@
 // Imports
 import java.util.Random;
+import java.util.Scanner;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.swing.border.TitledBorder;
 
@@ -53,6 +54,9 @@ public class JavaCrypt extends JFrame
 	Random random = new Random(); // Create a random object for random number generation
 	
 	// Constructor(s)
+	/**
+	 * 
+	 */
 	public JavaCrypt() // No-arg constructor
 	{	
 		// Set window features
@@ -220,8 +224,8 @@ public class JavaCrypt extends JFrame
 			// Write to file
 			try
 			{
-			BufferedWriter writer = new BufferedWriter(new FileWriter("highscore.txt")); // Create BufferedWriter object
-			writer.write(Integer.toString(numberOfEnemiesDefeated)); // Write numberOfEnemiesDefeated to highscore.txt
+			PrintWriter writer = new PrintWriter(new FileWriter("highscore.txt")); // Create BufferedWriter object
+			writer.println(numberOfEnemiesDefeated); // Write numberOfEnemiesDefeated to highscore.txt
 			writer.close(); // Close the writer
 			
 			} catch (IOException e)
@@ -237,11 +241,11 @@ public class JavaCrypt extends JFrame
 		// Read from file
 		try
 		{
-			BufferedReader reader = new BufferedReader(new FileReader("highscore.txt"));
+			Scanner scanner = new Scanner(new File("highscore.txt"));
 			
-			String lineRead = reader.readLine(); // Create local string for the line read and assign it to return from readLine
+			String lineRead = scanner.nextLine(); // Create local string for the line read and assign it to return from readLine
 			highScore = Integer.parseInt(lineRead); // Convert the lineRead string to an int
-			reader.close(); // Close the reader
+			scanner.close(); // Close the reader
 		}
 		catch (FileNotFoundException e)
 		{

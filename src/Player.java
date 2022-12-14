@@ -6,7 +6,6 @@ public class Player
 {	
 	// Objects
 	Random random = new Random(); // Create a random object for random number generation
-	private Enemy enemy; // Player has-a enemy
 		
 	// Establish Player variables
 	private final int MAX_ATTACK_DAMAGE = 40; // Maximum amount of player attack damage
@@ -31,18 +30,14 @@ public class Player
 	// Mutator(s)
 	public void receiveAttack(Enemy givenEnemy)
 	{
-		enemy = givenEnemy; // Set the player
-		
-		enemyDamage = enemy.damageDealt(); // Set the enemy damage
+		enemyDamage = givenEnemy.damageDealt(); // Set the enemy damage
 		
 		health -= enemyDamage; // Subtract damage dealt by enemy from enemy health
 	}
 	
 	public void receiveFleeAttack(Enemy givenEnemy)
 	{
-		enemy = givenEnemy; // Set the enemy
-		
-		enemyFleeDamage = enemy.fleeDamageDealt(); // Call the enemy from the game
+		enemyFleeDamage = givenEnemy.fleeDamageDealt(); // Call the enemy from the game
 		
 		health -= enemyFleeDamage; // Subtract damage dealt by enemy from enemy health
 	}

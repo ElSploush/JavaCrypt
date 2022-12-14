@@ -6,7 +6,6 @@ public class Enemy
 {	
 	// Objects
 	Random random = new Random(); // Create a random object for random number generation
-	private Player player; // Enemy has-a player
 	
 	// Establish finals
 	private final int HEALTH_POTION_DROP_CHANCE = 40; // Amount of heal per health potion
@@ -33,9 +32,7 @@ public class Enemy
 	// Mutator(s)
 	public void receiveAttack(Player givenPlayer)
 	{
-		player = givenPlayer; // Set the player
-		
-		playerDamage = player.damageDealt(); // Set the player damage
+		playerDamage = givenPlayer.damageDealt(); // Set the player damage
 		
 		health -= playerDamage; // Subtract damage dealt by player from enemy health
 	}
