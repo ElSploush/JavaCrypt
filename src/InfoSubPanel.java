@@ -1,3 +1,13 @@
+/**
+ * Represents an JPanel for the game
+ * @author Brandon Ware
+ * @version 2.5
+ * @since 1.0
+ * @reference Gaddis, T. (2015). Starting Out With Java Myprogramming Lab
+ * From Control Structures Through Objects. (6th ed.). Addison-Wesley.
+ * McFayden, R. (2015). Java with BlueJ Part I.
+ */
+
 // Imports
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +35,9 @@ public class InfoSubPanel extends JPanel
     private JTextField highScoreTextField; // Text field for highscore
     
     // Constructor(s)
+    /**
+     * Creates an InfoSubPanel with JLabels and JTextFields
+     */
     public InfoSubPanel() // No-arg constructor
     {
     	// Set the panel layout
@@ -72,31 +85,55 @@ public class InfoSubPanel extends JPanel
     }
     
     // Mutator(s)
+    /**
+     * Set text field to a player's health
+     * @param playerHealth
+     */
     public void setPlayerHealthTextField(int playerHealth) // Set the playerHealthTextField
     {
     	playerHealthTextField.setText(Integer.toString(playerHealth)); // Convert to string
     }
     
+    /**
+     * Set text field to a player's number of health potions
+     * @param numberOfHealthPotions
+     */
     public void setNumberOfHealthPotionsTextField(int numberOfHealthPotions) // Set the numberOfHealthPotionsTextField
     {
     	numberOfHealthPotionsTextField.setText(Integer.toString(numberOfHealthPotions)); // Convert to string
     }
     
+    /**
+     * Set text field to an enemy's name(type)
+     * @param currentEnemy
+     */
     public void setEnemyTypeTextField(String currentEnemy) // Set the enemyTypeTextField
     {
     	enemyTypeTextField.setText(currentEnemy);
     }
     
+    /**
+     * Set text field to an enemy's health
+     * @param currentEnemyHealth
+     */
     public void setEnemyHealthTextField(int currentEnemyHealth) // Set the enemyHealthTextField
     {
     	enemyHealthTextField.setText(Integer.toString(currentEnemyHealth)); // Convert to string
     }
     
+    /**
+     * Set text field to the current number of enemies defeated
+     * @param numberOfEnemiesDefeated
+     */
     public void setNumberOfEnemiesDefeatedTextField(int numberOfEnemiesDefeated) // Set the numberOfEnemiesDefeatedTextField
     {
     	numberOfEnemiesDefeatedTextField.setText(Integer.toString(numberOfEnemiesDefeated)); // Convert to string
     }
     
+    /**
+     * Set high score text field with the high score
+     * @param highScore
+     */
     public void setHighScoreTextField(int highScore) // Set the highscoreTextField
     {
     	highScoreTextField.setText(Integer.toString(highScore)); // Convert to string

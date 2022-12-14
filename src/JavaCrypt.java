@@ -1,3 +1,13 @@
+/**
+ * Represents a JFrame object to play the game
+ * @author Brandon Ware
+ * @version 2.5
+ * @since 1.0
+ * @reference Gaddis, T. (2015). Starting Out With Java Myprogramming Lab
+ * From Control Structures Through Objects. (6th ed.). Addison-Wesley.
+ * McFayden, R. (2015). Java with BlueJ Part I.
+ */
+
 // Imports
 import java.util.Random;
 import javax.swing.*;
@@ -53,6 +63,9 @@ public class JavaCrypt extends JFrame
 	Random random = new Random(); // Create a random object for random number generation
 	
 	// Constructor(s)
+	/**
+	 * Creates a JavaCrypt game
+	 */
 	public JavaCrypt() // No-arg constructor
 	{	
 		// Set window features
@@ -80,6 +93,9 @@ public class JavaCrypt extends JFrame
 	}
 	
 	// Mutator(s)
+	/**
+	 * Creates an enemy object and chooses it's attributes
+	 */
 	public void spawnEnemy()
 	{
 		int enemyChoice = random.nextInt(3); // Generate a random number
@@ -106,6 +122,9 @@ public class JavaCrypt extends JFrame
 		infoSubPanel.setEnemyHealthTextField(enemy.getHealth()); // Update enemy health
 	}
 	
+	/**
+	 * Assigns the playPanel characteristics
+	 */
 	public void createPlayPanel()
 	{
 		// Establish local variables
@@ -117,19 +136,22 @@ public class JavaCrypt extends JFrame
 		
 		// Add playPanel components and designate location
 		add(infoSubPanel, BorderLayout.NORTH);
-		playPanel.add(actionSubPanel, BorderLayout.SOUTH);
+		add(actionSubPanel, BorderLayout.SOUTH);
 		
 		// Create TitledBorder objects for playPanel and infoPanel, then format
-		TitledBorder aboveTopBorderPlayPanel = BorderFactory.createTitledBorder("Actions");
-		aboveTopBorderPlayPanel.setTitlePosition(TitledBorder.ABOVE_TOP);
+		TitledBorder aboveTopBorderActionSubPanel = BorderFactory.createTitledBorder("Actions");
+		aboveTopBorderActionSubPanel.setTitlePosition(TitledBorder.ABOVE_TOP);
 		TitledBorder aboveTopBorderInfoSubPanel = BorderFactory.createTitledBorder("Game Info");
 		aboveTopBorderInfoSubPanel.setTitlePosition(TitledBorder.ABOVE_TOP);
 		
 		// Set infoSubPanel and actionSubPanel to the aboveTopBorder
-		playPanel.setBorder(aboveTopBorderPlayPanel);
+		actionSubPanel.setBorder(aboveTopBorderActionSubPanel);
 		infoSubPanel.setBorder(aboveTopBorderInfoSubPanel); 
 	}
 	
+	/**
+	 * Determines damage received by a player and enemy, displays message, and sets corresponding text fields
+	 */
 	public void attackPhase()
 	{
 		enemy.receiveAttack(player); // Receive attack on enemy
@@ -145,6 +167,9 @@ public class JavaCrypt extends JFrame
 		
 	}
 	
+	/**
+	 * Determines damage received by a player during a flee attempt, displays message, and updates corresponding text field 
+	 */
 	public void fleeAttack()
 	{
 		player.receiveFleeAttack(enemy); // Receive flee attack on player
@@ -157,6 +182,9 @@ public class JavaCrypt extends JFrame
 		infoSubPanel.setPlayerHealthTextField(player.getHealth()); // Set player health text field
 	}
 	
+	/**
+	 * Uses a health potion on a player, displays message, and updates corresponding text field
+	 */
 	public void heal()
 	{
 		player.useHealthPotion(); // Use a health potion on the player
@@ -169,6 +197,9 @@ public class JavaCrypt extends JFrame
 		infoSubPanel.setNumberOfHealthPotionsTextField(player.getNumberOfHealthPotions()); // Set number of health potions text field
 	}
 	
+	/**
+	 * Determines if a health potion drops, a player finds it, and updates corresponding text field
+	 */
 	public void dropHealthPotion()
 	{
 		if (random.nextInt(101) < enemy.getHealthPotionDropChance())
@@ -180,6 +211,9 @@ public class JavaCrypt extends JFrame
 		}
 	}
 	
+	/**
+	 * Displays a message for the game ending, and closes the program
+	 */
 	public void gameOver()
 	{
 		JOptionPane.showMessageDialog(null, "You have been defeated by " + enemy.getEnemy() + "!" + "\nGood luck next time!"); // Display game over message
@@ -188,6 +222,9 @@ public class JavaCrypt extends JFrame
 		System.exit(0); // stop program
 	}
 	
+	/**
+	 * Displays a message for an enemy being defeated, increases the number of enemies defeated, determines if it sets a high score, and updates the corresponding text field
+	 */
 	public void enemyDead()
 	{
 		// Display message
@@ -203,6 +240,9 @@ public class JavaCrypt extends JFrame
 		infoSubPanel.setNumberOfEnemiesDefeatedTextField(numberOfEnemiesDefeated);
 	}
 	
+	/**
+	 * Displays a message for a player fleeing, spawns a new enemy
+	 */
 	public void flee()
 	{
 		// Display message
@@ -213,6 +253,10 @@ public class JavaCrypt extends JFrame
 		this.spawnEnemy();
 	}
 	
+	/**
+	 * Determines if high score occurs, and writes the high score to a file if it does occur
+	 * Catches IOException if the file for a high score does not exist, and displays message for the error
+	 */
 	public void isHighScore()
 	{
 		if (numberOfEnemiesDefeated > highScore)
@@ -226,12 +270,16 @@ public class JavaCrypt extends JFrame
 			
 			} catch (IOException e)
 			{
-				// Print error message
+				// Display error message
 				JOptionPane.showMessageDialog(null, "Error writing to file \'highscore.txt\'");
 			}	
 		}
 	}
 	
+	/**
+	 * Loads high score from a file, displays message if an error occurs, and updates corresponding text field
+	 * @throws IOException
+	 */
 	public void loadHighScore() throws IOException
 	{
 		// Read from file
@@ -245,12 +293,13 @@ public class JavaCrypt extends JFrame
 		}
 		catch (FileNotFoundException e)
 		{
-			// Print error message 
+			// Display error message
 			JOptionPane.showMessageDialog(null, "Error reading file \'highscore.txt\'. The program will close.");
 			System.exit(0);
 		}
 		catch (NumberFormatException nfe)
 		{
+			// Display error message
 			JOptionPane.showMessageDialog(null, "Conversion error from \'highscore.txt\'. The program will close.");
 			System.exit(0);
 		}
@@ -259,8 +308,12 @@ public class JavaCrypt extends JFrame
 		infoSubPanel.setHighScoreTextField(highScore);
 	}
 	
+	/**
+	 * Determines if a game is over
+	 * @return boolean true if a game is over, false if a game is not over
+	 */
 	// Accessor(s)
-	public boolean isGameOver() //Determine if the game is over
+	public boolean isGameOver()
 	{
 		if (player.getHealth() <= 0)
 		{
@@ -272,7 +325,11 @@ public class JavaCrypt extends JFrame
 		}
 	}
 	
-	public boolean isEnemyDead() //Determine if the enemy is dead
+	/**
+	 * Determines if a enemy is dead
+	 * @return boolean true if a enemy is dead, false if not dead
+	 */
+	public boolean isEnemyDead()
 	{
 		if (enemy.getHealth() <= 0)
 		{
@@ -284,7 +341,11 @@ public class JavaCrypt extends JFrame
 		}
 	}
 	
-	public boolean isHealthPotion() //Determine if the game is over
+	/**
+	 * Determines if a potion is available for use by a player
+	 * @return boolean true if a potion can be used, false if a potion cannot be used
+	 */
+	public boolean isHealthPotion()
 	{
 		if (player.getNumberOfHealthPotions() > 0)
 		{
@@ -296,6 +357,10 @@ public class JavaCrypt extends JFrame
 		}
 	}
 
+	/**
+	 * Determines if a flee attempt is successful
+	 * @return true if flee attempt is successful, false if unsuccessful
+	 */
 	public boolean isFleeSuccessful() // Determine if the flee is successful
 	{
 		// Calculate flee roll
@@ -309,15 +374,5 @@ public class JavaCrypt extends JFrame
 		{
 			return false;
 		}
-	}
-	
-	public Player getPlayer()
-	{
-		return player;
-	}
-	
-	public Enemy getEnemy()
-	{
-		return enemy;
 	}
 }	

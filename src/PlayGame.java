@@ -1,3 +1,14 @@
+/**
+ * Represents the main method to play the game
+ * @author Brandon Ware
+ * @version 2.5
+ * @since 2.1
+ * @reference Gaddis, T. (2015). Starting Out With Java Myprogramming Lab
+ * From Control Structures Through Objects. (6th ed.). Addison-Wesley.
+ * McFayden, R. (2015). Java with BlueJ Part I.
+ */
+
+// Imports
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
@@ -5,6 +16,11 @@ import javax.swing.JOptionPane;
 public class PlayGame
 {
 	// Main Method
+	/**
+	 * Display welcome message, game directions, create an instance of the game window, and load the high score
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException
 	{
 		// Display welcome message

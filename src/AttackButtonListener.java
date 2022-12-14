@@ -1,3 +1,13 @@
+/**
+ * Implements an ActionListener for an AttackButton
+ * @author Brandon Ware
+ * @version 2.5
+ * @since 1.0
+ * @reference Gaddis, T. (2015). Starting Out With Java Myprogramming Lab
+ * From Control Structures Through Objects. (6th ed.). Addison-Wesley.
+ * McFayden, R. (2015). Java with BlueJ Part I.
+ */
+
 // Imports
 import java.awt.event.*;
 import java.util.Random;
@@ -9,12 +19,19 @@ public class AttackButtonListener implements ActionListener
 	Random random = new Random(); // Create random object for random number generation
 	
 	// Constructor(s)
+	/**
+	 * Create an ActionListener with a game
+	 * @param givenGame
+	 */
 	public AttackButtonListener(JavaCrypt givenGame) // Create listener with an AttackButton and JavaCrypt
     {
         game = givenGame; // Set the game
     }
 	
 	// Mutator(s)
+	/**
+	 * Perform an attack phase, determine if the game is over, determine if the enemy is dead, determine if a health potion drops, spawn a new enemy if an enemy is dead
+	 */
 	public void actionPerformed(ActionEvent e)
     {
 		// Perform attack methods

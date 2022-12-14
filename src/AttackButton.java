@@ -1,3 +1,14 @@
+/**
+ * Represents an ActionButton for the ActionSubPanel
+ * @author Brandon Ware
+ * @version 2.5
+ * @since 1.0
+ * @reference Gaddis, T. (2015). Starting Out With Java Myprogramming Lab
+ * From Control Structures Through Objects. (6th ed.). Addison-Wesley.
+ * McFayden, R. (2015). Java with BlueJ Part I.
+ */
+
+// Imports
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
@@ -5,6 +16,10 @@ import javax.swing.SwingConstants;
 public class AttackButton extends ActionButton
 {
 	// Constructor(s)
+	/**
+	 * Create an ActionButton with a String, and set it's design
+	 * @param string
+	 */
 	public AttackButton(String string) // Create AttackButton with icon
     {
 		// Call the super constructor (EmptyButton)
