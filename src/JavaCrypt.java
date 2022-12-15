@@ -11,7 +11,6 @@
 // Imports
 import java.util.Random;
 import java.util.Scanner;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -280,7 +279,7 @@ public class JavaCrypt extends JFrame
 	 * Loads high score from a file, displays message if an error occurs, and updates corresponding text field
 	 * @throws IOException
 	 */
-	public void loadHighScore() throws IOException
+	public void loadHighScore()
 	{
 		// Read from file
 		try

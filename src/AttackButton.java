@@ -9,6 +9,8 @@
  */
 
 // Imports
+import java.awt.Color;
+
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
@@ -22,7 +24,7 @@ public class AttackButton extends ActionButton
 	 */
 	public AttackButton(String string) // Create AttackButton with icon
     {
-		// Call the super constructor (EmptyButton)
+		// Call the super constructor (ActionButton)
         super(string);
         
 		setVerticalTextPosition(SwingConstants.BOTTOM); // Set position of title vertically 
