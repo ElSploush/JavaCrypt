@@ -64,11 +64,7 @@ public class JavaCrypt extends JFrame
 	
 	// Constructor(s)
 	/**
-<<<<<<< HEAD
 	 * Creates a JavaCrypt game
-=======
-	 * 
->>>>>>> refs/remotes/origin/main
 	 */
 	public JavaCrypt() // No-arg constructor
 	{	
